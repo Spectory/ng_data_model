@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
+  <script src="app.js"></script>
+  <script src="ng_data_model.js"></script>
+  <script src="app_ctl.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body ng-app="app">
+  <div class="container" ng-controller='appCtl' ng-init='init()'>
+
+<table class='table table-striped table-bordered'>
+    <tr class="container">
+      <td class="col-md-2">
+        <form>
+          <div class="form-group">
+            <label>Model Name</label>
+            <input type="text" class="form-control" placeholder="Model Name" ng-model="target_model_name">
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click='createModel()'>Create</button>
+        </form>
+      </td>
+      <td>{{models_names}}</td>
+    </tr>
+
+    <tr class="container">
+      <td class="col-md-2">
+        <form>
+          <div class="form-group">
+            <label>Add Member To Model</label>
+            <input type="text" class="form-control" placeholder="Model Name" ng-model="target_model_name">
+            <input type="text" class="form-control" placeholder="attribute" ng-model="attr">
+            <input type="text" class="form-control" placeholder="val" ng-model="val">
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click='addToModel()'>Add</button>
+        </form>
+      </td>
+
+      <td class="col-md-6">
+        <table class='table' ng-repeat='name in models_names'>
+          <tr>
+            <td>
+            {{name}}:
+            </td>
+            <td>
+              <table class='table'>
+                <tr ng-repeat='member in getModelByName(name)'>
+                  <td>{{member}}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr class="container">
+      <td class="col-md-2">
+        <form>
+          <div class="form-group">
+            <label>Group model members</label>
+            <input type="text" class="form-control" placeholder="Model Name" ng-model="target_model_name">
+            <input type="text" class="form-control" placeholder="attribute" ng-model="attr">
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click='groupModelByAttr()'>Group</button>
+        </form>
+      </td>
+
+      <td>
+        <table class='table'>
+          <tr ng-repeat='(k, g) in group'>
+            <td>{{k}}</td>
+            <td>{{g}}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr class="container">
+      <td class="col-md-2">
+        <form>
+          <div class="form-group">
+            <label>Filter model members</label>
+            <input type="text" class="form-control" placeholder="Model Name" ng-model="target_model_name">
+            <input type="text" class="form-control" placeholder="attribute" ng-model="attr">
+            <input type="text" class="form-control" placeholder="val" ng-model="val">
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click='filterModelByAttrAndValue()'>Filter</button>
+        </form>
+      </td>
+
+      <td>
+        <table class='table'>
+          <tr ng-repeat='k in filtered_with_val'>
+            <td>{{k}}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr class="container">
+      <td class="col-md-2">
+        <form>
+          <div class="form-group">
+            <label>Filter model members with attr</label>
+            <input type="text" class="form-control" placeholder="Model Name" ng-model="target_model_name">
+            <input type="text" class="form-control" placeholder="attribute" ng-model="attr">
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click='filterModelByAttr()'>Filter</button>
+        </form>
+      </td>
+
+      <td>
+        <table class='table'>
+          <tr ng-repeat='k in filtered'>
+            <td>{{k}}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr class="container">
+      <td class="col-md-2">
+        <form>
+          <div class="form-group">
+            <label>Filter model members with array of values</label>
+            <input type="text" class="form-control" placeholder="Model Name" ng-model="target_model_name">
+            <input type="text" class="form-control" placeholder="attribute" ng-model="attr">
+            <input type="text" class="form-control" placeholder="val1,val2..." ng-model="val">
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click='filterModelByAttrAndValuesArray()'>Filter</button>
+        </form>
+      </td>
+
+      <td>
+        <table class='table'>
+          <tr ng-repeat='k in filtered_with_val_arr'>
+            <td>{{k}}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr class="container">
+      <td class="col-md-2">
+        <form>
+          <div class="form-group">
+            <label>joinView('cats', 'cats_owners', 'owner_', ['owner_id', 'id'])</label>
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click='joinView()'>Join</button>
+        </form>
+      </td>
+
+      <td>
+        <table class='table'>
+          <tr ng-repeat='j in joined_view'>
+            <td>{{j}}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+  </table>
+</div>
+</body>
+</html>
